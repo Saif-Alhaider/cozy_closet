@@ -1,10 +1,28 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="black">#141414</color>
+    <color name="white">#ffffff</color>
+    <color name="default_body">#26303a</color>
+    <color name="disabled_disabled_content">#c4c4c4</color>
+    <color name="disabled_disabled">#f2f2f2</color>
+    <color name="foundation_primary_darker">#1b232a</color>
+    <color name="foundation_primary_100">#edeff2</color>
+    <color name="foundation_primary_200">#e4e8eb</color>
+    <color name="foundation_primary_300">#c8cfd5</color>
+    <color name="foundation_primary_400">#4e6378</color>
+    <color name="foundation_primary_500">#46596c</color>
+    <color name="foundation_primary_600">#3e4f60</color>
+    <color name="foundation_primary_700">#3b4a5a</color>
+    <color name="foundation_primary_800">#2f3b48</color>
+    <color name="foundation_primary_900">#232d36</color>
+    <color name="foundation_secondary_100">#f6f4f2</color>
+    <color name="foundation_secondary_200">#f1eeeb</color>
+    <color name="foundation_secondary_300">#e2dcd5</color>
+    <color name="foundation_secondary_400">#a28e79</color>
+    <color name="foundation_secondary_500">#92806d</color>
+    <color name="foundation_secondary_600">#827261</color>
+    <color name="foundation_secondary_700">#7a6b5b</color>
+    <color name="foundation_secondary_800">#615549</color>
+    <color name="foundation_secondary_900">#494036</color>
+    <color name="foundation_secondary_darker">#39322a</color>
 </resources>
