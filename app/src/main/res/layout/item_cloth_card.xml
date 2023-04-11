@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="158dp"
+    android:layout_height="230dp"
+    android:background="@drawable/item_card_radius"
+    >
+
+    <ImageView
+        android:layout_margin="4dp"
+        android:id="@+id/image_view_cloth"
+        android:layout_width="match_parent"
+        android:layout_height="193dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/tshirt_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/text_view_cloth_type"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_view_cloth_type"
+        android:layout_marginHorizontal="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        tools:text="@tools:sample/lorem/random"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:gravity="center"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_cloth"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
