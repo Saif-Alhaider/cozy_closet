@@ -16,21 +16,11 @@ class WeatherService {
     }
 
     fun getWeather(weatherRequest: WeatherRequest) {
-        val url = HttpUrl
-            .Builder()
-            .scheme("https")
-            .host("api.open-meteo.com")
-            .addPathSegment("v1")
-            .addPathSegment("forecast")
-            .addQueryParameter("latitude", weatherRequest.latitude.toString())
-            .addQueryParameter("longitude", weatherRequest.longitude.toString())
-            .addQueryParameter("hourly", weatherRequest.hourly)
-            .addQueryParameter("current_weather", weatherRequest.current_weather.toString())
-            .build()
 
-        val request = Request.Builder().url(url).build()
+        val request = makeWeatherRequest(weatherRequest)
 
-        httpClient.newCall(request).enqueue(object : Callback {
+        httpClient.newCall(request).enqueue(object :
+            Callback {
             override fun onFailure(call: Call, e: IOException) {
                 Log.i("Weather", "fail ${e.message}")
             }
@@ -43,5 +33,21 @@ class WeatherService {
             }
         }
         )
+    }
+
+    private fun makeWeatherRequest(weatherRequest: WeatherRequest): Request {
+        val url = HttpUrl
+            .Builder()
+            .scheme("https")
+            .host("api.open-meteo.com")
+            .addPathSegment("v1")
+            .addPathSegment("forecast")
+            .addQueryParameter("latitude", weatherRequest.latitude.toString())
+            .addQueryParameter("longitude", weatherRequest.longitude.toString())
+            .addQueryParameter("hourly", weatherRequest.hourly)
+            .addQueryParameter("current_weather", weatherRequest.current_weather.toString())
+            .build()
+
+        return Request.Builder().url(url).build()
     }
 }
