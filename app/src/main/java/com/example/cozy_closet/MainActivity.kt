@@ -27,24 +27,19 @@ class MainActivity : AppCompatActivity(), MainActivityView {
     }
 
     private fun setWeatherData() {
+        val weatherRequest: WeatherRequest = WeatherRequest(
+            latitude = 33.23,
+            longitude = 44.33,
+            hourly = "temperature_80m",
+            current_weather = true
+        )
         WeatherService().getWeather(
-            WeatherRequest(
-                latitude = 33.23,
-                longitude = 44.33,
-                hourly = "temperature_80m",
-                current_weather = true
-            ),
+            weatherRequest,
             onSuccess = ::onSuccess,
             onFailure = ::onFailure
         )
     }
 
-    private fun convertDateFormat(dateTime: String): String {
-        val formatterInput = DateTimeFormatter.ISO_DATE_TIME
-        val formatterOutput = DateTimeFormatter.ofPattern("EEE, dd MMMM yyyy", Locale.ENGLISH)
-        val parsedDateTime = LocalDateTime.parse(dateTime, formatterInput)
-        return formatterOutput.format(parsedDateTime)
-    }
 
     override fun onSuccess(response: Response) {
         val result = Gson().fromJson(response.body?.string().toString(), Weather::class.java)
@@ -54,6 +49,10 @@ class MainActivity : AppCompatActivity(), MainActivityView {
             val temperature = result.currentWeather.temperature
             setCardData(weatherCode, temperature)
         }
+    }
+
+    override fun onFailure(message: String?) {
+        Log.i("Weather", "failed $message")
     }
 
     private fun setCardData(weatherCode: Int, temperature: Double) {
@@ -71,7 +70,12 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         }
     }
 
-    override fun onFailure(message: String?) {
-        Log.i("Weather", "failed $message")
+    private fun convertDateFormat(dateTime: String): String {
+        val formatterInput = DateTimeFormatter.ISO_DATE_TIME
+        val formatterOutput = DateTimeFormatter.ofPattern("EEE, dd MMMM yyyy", Locale.ENGLISH)
+        val parsedDateTime = LocalDateTime.parse(dateTime, formatterInput)
+        return formatterOutput.format(parsedDateTime)
     }
+
+
 }
