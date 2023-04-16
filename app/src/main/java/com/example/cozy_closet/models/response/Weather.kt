@@ -1,14 +1,17 @@
 package com.example.cozy_closet.models.response
 
+import com.google.gson.annotations.SerializedName
+
 data class Weather(
     val latitude: Double,
     val longitude: Double,
-    val generationtime_ms: Double,
+    @SerializedName("generationtime_ms") val generationtimeMs: Double,
     val utc_offset_seconds: Double,
     val timezone: String,
-    val timezone_abbreviation: String,
+    @SerializedName("timezone_abbreviation") val timezoneAbbreviation: String,
     val elevation: Double,
-    val currentWeather: CurrentWeather,
-    val hourlyUnits: HourlyUnits,
-    val hourly: Hourly
+    @SerializedName("current_weather") val currentWeather: CurrentWeather,
+    @SerializedName("hourly_units") val hourlyUnits: HourlyUnits,
+    @SerializedName("hourly") val hourly: Hourly
 )
+//current_weather

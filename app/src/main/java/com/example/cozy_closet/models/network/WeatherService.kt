@@ -8,32 +8,22 @@ import okhttp3.*
 import okhttp3.logging.HttpLoggingInterceptor
 import java.io.IOException
 
-class WeatherService {
-    private val httpClient: OkHttpClient by lazy {
+class WeatherService() : BaseService() {
+    override val client: OkHttpClient by lazy {
         val loggingInterceptor = HttpLoggingInterceptor()
         loggingInterceptor.level = HttpLoggingInterceptor.Level.BODY
         OkHttpClient.Builder().addInterceptor(loggingInterceptor).build()
     }
 
-    fun getWeather(weatherRequest: WeatherRequest) {
-
+    fun getWeather(
+        weatherRequest: WeatherRequest,
+        onFailure: (message: String?) -> Unit,
+        onSuccess: (response: Response) -> Unit
+    ) {
         val request = makeWeatherRequest(weatherRequest)
-
-        httpClient.newCall(request).enqueue(object :
-            Callback {
-            override fun onFailure(call: Call, e: IOException) {
-                Log.i("Weather", "fail ${e.message}")
-            }
-
-            override fun onResponse(call: Call, response: Response) {
-                response.body?.string().let { jsonString ->
-                    val result = Gson().fromJson(jsonString, Weather::class.java)
-                    Log.i("Weather", result.toString())
-                }
-            }
-        }
-        )
+        makeRequestCall(request, onSuccess, onFailure)
     }
+
 
     private fun makeWeatherRequest(weatherRequest: WeatherRequest): Request {
         val url = HttpUrl
