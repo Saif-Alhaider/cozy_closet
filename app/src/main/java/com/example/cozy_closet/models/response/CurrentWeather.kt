@@ -1,10 +1,12 @@
 package com.example.cozy_closet.models.response
 
+import com.google.gson.annotations.SerializedName
+
 data class CurrentWeather(
-    val temperature: Double,
-    val wind_speed: Double,
-    val wind_direction: Double,
-    val weather_code: Int,
-    val is_day: Int,
-    val time: String
+    @SerializedName("temperature") val temperature: Double,
+    @SerializedName("wind_speed") val windSpeed: Double,
+    @SerializedName("wind_direction") val windDirection: Double,
+    @SerializedName("weather_code") val weatherCode: Int,
+    @SerializedName("is_day") val isDay: Int,
+    @SerializedName("time") val time: String
 )

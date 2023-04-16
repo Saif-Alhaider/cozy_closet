@@ -10,20 +10,23 @@ import com.example.cozy_closet.models.network.WeatherService
 import com.example.cozy_closet.models.request.WeatherRequest
 import com.example.cozy_closet.models.response.Weather
 import com.google.gson.Gson
+import okhttp3.Response
 import java.time.LocalDateTime
+import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), MainActivityView {
     private lateinit var binding: ActivityMainBinding
+    private val presenter: Presenter by lazy { Presenter(this) }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        setWeatherCardData()
+        setWeatherData()
     }
 
-    private fun setWeatherCardData() {
+    private fun setWeatherData() {
         WeatherService().getWeather(
             WeatherRequest(
                 latitude = 33.23,
@@ -31,30 +34,8 @@ class MainActivity : AppCompatActivity() {
                 hourly = "temperature_80m",
                 current_weather = true
             ),
-            onSuccess = {
-                val result = Gson().fromJson(it.body?.string().toString(), Weather::class.java)
-                runOnUiThread {
-                    val weatherCode = result.currentWeather.weather_code
-                    val weatherType =
-                        WeatherCodes.getCodeDescription(weatherCode)
-                    val date = convertDateFormat(result.currentWeather.time)
-                    val temperature = result.currentWeather.temperature
-                    binding.run {
-                        weatherCard.textViewWeatherType.text = weatherType
-                        weatherCard.textViewDate.text = date
-                        weatherCard.textViewWeatherTemp.text =
-                            getString(R.string.temperature, temperature.toString())
-                        weatherCard.imageViewWeatherIcon.setImageResource(
-                            getImageFromWeatherCode(
-                                weatherCode
-                            )
-                        )
-                    }
-                }
-            },
-            onFailure = {
-                Log.i("Weather", "failed $it")
-            }
+            onSuccess = ::onSuccess,
+            onFailure = ::onFailure
         )
     }
 
@@ -65,19 +46,32 @@ class MainActivity : AppCompatActivity() {
         return formatterOutput.format(parsedDateTime)
     }
 
-    private fun getImageFromWeatherCode(weatherCode: Int): Int {
-        return when (WeatherCodes.values().find { it.codes.contains(weatherCode) }) {
-            WeatherCodes.CLEAR_SKY -> R.drawable.clear
-            WeatherCodes.PARTLY_CLOUDY -> R.drawable.cloudy
-            WeatherCodes.FOG -> R.drawable.fog
-            WeatherCodes.FREEZING_RAIN -> R.drawable.chance_of_freezing_rain
-            WeatherCodes.SNOW_FALL -> R.drawable.snow
-            WeatherCodes.RAIN -> R.drawable.rain
-            else -> R.drawable.thunderstorm
+    override fun onSuccess(response: Response) {
+        val result = Gson().fromJson(response.body?.string().toString(), Weather::class.java)
+
+        runOnUiThread {
+            val weatherCode = result.currentWeather.weatherCode
+            val temperature = result.currentWeather.temperature
+            setCardData(weatherCode, temperature)
         }
     }
 
-    fun chooseClothes(){
+    private fun setCardData(weatherCode: Int, temperature: Double) {
+        val currentTime = LocalDateTime.now().toString()
+        val date = convertDateFormat(currentTime)
+        val weatherDescription = WeatherCodes.getCodeDescription(weatherCode)
 
+        binding.weatherCard.run {
+            textViewWeatherDescription.text = weatherDescription
+            textViewDate.text = date
+            textViewWeatherTemp.text = getString(R.string.temperature, temperature.toString())
+            imageViewWeatherIcon.setImageResource(
+                WeatherCodes.getImageFromWeatherCode(weatherCode)
+            )
+        }
+    }
+
+    override fun onFailure(message: String?) {
+        Log.i("Weather", "failed $message")
     }
 }

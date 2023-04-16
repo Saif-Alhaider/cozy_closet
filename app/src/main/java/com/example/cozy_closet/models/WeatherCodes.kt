@@ -1,5 +1,7 @@
 package com.example.cozy_closet.models
 
+import com.example.cozy_closet.R
+
 enum class WeatherCodes(val description: String, val codes: List<Int>) {
     CLEAR_SKY("Clear sky", listOf(0)),
     PARTLY_CLOUDY("Partly cloudy", listOf(1, 2, 3)),
@@ -12,6 +14,18 @@ enum class WeatherCodes(val description: String, val codes: List<Int>) {
     companion object {
         fun getCodeDescription(code: Int): String? {
             return values().find { it.codes.contains(code) }?.description
+        }
+
+        fun getImageFromWeatherCode(weatherCode: Int): Int {
+            return when (WeatherCodes.values().find { it.codes.contains(weatherCode) }) {
+                WeatherCodes.CLEAR_SKY -> R.drawable.clear
+                WeatherCodes.PARTLY_CLOUDY -> R.drawable.cloudy
+                WeatherCodes.FOG -> R.drawable.fog
+                WeatherCodes.FREEZING_RAIN -> R.drawable.chance_of_freezing_rain
+                WeatherCodes.SNOW_FALL -> R.drawable.snow
+                WeatherCodes.RAIN -> R.drawable.rain
+                else -> R.drawable.thunderstorm
+            }
         }
     }
 }

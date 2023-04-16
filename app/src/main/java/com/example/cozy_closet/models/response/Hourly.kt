@@ -1,6 +1,8 @@
 package com.example.cozy_closet.models.response
 
+import com.google.gson.annotations.SerializedName
+
 data class Hourly(
-    val time:List<String>,
-    val temperature_80m:List<Double>
+    @SerializedName("time") val time:List<String>,
+    @SerializedName("temperature_80m") val temperature_80m:List<Double>
 )

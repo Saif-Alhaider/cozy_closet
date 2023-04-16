@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">cozy_closet</string>
-    <string name="temperature">%1S °c</string>
+    <string name="temperature">%1S°c</string>
 </resources>
