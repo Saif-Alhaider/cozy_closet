@@ -1,18 +1,19 @@
 package com.example.cozy_closet
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.cozy_closet.databinding.ActivityMainBinding
-import com.example.cozy_closet.databinding.ItemWeatherCardBinding
+import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
 import com.example.cozy_closet.models.network.WeatherService
 import com.example.cozy_closet.models.request.WeatherRequest
 import com.example.cozy_closet.models.response.Weather
+import com.example.cozy_closet.util.PrefUtil
 import com.google.gson.Gson
 import okhttp3.Response
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -24,19 +25,41 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setWeatherData()
+        Log.i("Clothes_Data", suggestClothes(this).toString())
     }
+
+    private fun suggestClothes(context: Context): Clothes {
+        val storedDress = PrefUtil.getStoredClothes().dress
+        val storedPants = PrefUtil.getStoredClothes().pants
+
+        val prefs = PrefUtil.initSharedPrefs(context)
+        return if (storedDress == null || storedPants == null) {
+            setClothesData()
+            getClothesData()
+        } else {
+            getClothesData()
+        }
+    }
+
+    private fun setClothesData() {
+        PrefUtil.storeClothes(
+            Clothes(
+                dress = R.mipmap.pants_1,
+                pants = R.mipmap.sweater_2,
+                timeCreated = LocalDateTime.now().toString()
+            )
+        )
+    }
+
+    private fun getClothesData(): Clothes = PrefUtil.getStoredClothes()
+
 
     private fun setWeatherData() {
         val weatherRequest: WeatherRequest = WeatherRequest(
-            latitude = 33.23,
-            longitude = 44.33,
-            hourly = "temperature_80m",
-            current_weather = true
+            latitude = 33.23, longitude = 44.33, hourly = "temperature_80m", current_weather = true
         )
         WeatherService().getWeather(
-            weatherRequest,
-            onSuccess = ::onSuccess,
-            onFailure = ::onFailure
+            weatherRequest, onSuccess = ::onSuccess, onFailure = ::onFailure
         )
     }
 
@@ -76,6 +99,5 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         val parsedDateTime = LocalDateTime.parse(dateTime, formatterInput)
         return formatterOutput.format(parsedDateTime)
     }
-
 
 }
