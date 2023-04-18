@@ -23,7 +23,6 @@ object PrefUtil {
     }
 
     fun storeClothes(clothes: Clothes) {
-//        Log.i("tempreture", clothes.temperatureRange!!.first.toString())
         sharedPreferences?.edit()?.apply {
             putInt(DRESS, clothes.dress!!)
             putInt(PANTS, clothes.pants!!)

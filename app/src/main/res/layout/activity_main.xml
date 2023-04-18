@@ -23,6 +23,7 @@
 
         <include layout="@layout/item_cloth_card"
             android:layout_weight="1"
+            android:id="@+id/item_dress"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
@@ -31,6 +32,7 @@
             android:layout_height="match_parent"/>
         <include layout="@layout/item_cloth_card"
             android:layout_weight="1"
+            android:id="@+id/item_pants"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             />
