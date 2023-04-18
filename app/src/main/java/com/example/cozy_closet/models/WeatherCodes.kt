@@ -16,7 +16,7 @@ enum class WeatherCodes(val description: String, val codes: List<Int>) {
             return values().find { it.codes.contains(code) }?.description
         }
 
-        fun getImageFromWeatherCode(weatherCode: Int): Int {
+        fun getWeatherIconFromWeatherCode(weatherCode: Int): Int {
             return when (WeatherCodes.values().find { it.codes.contains(weatherCode) }) {
                 WeatherCodes.CLEAR_SKY -> R.drawable.clear
                 WeatherCodes.PARTLY_CLOUDY -> R.drawable.cloudy

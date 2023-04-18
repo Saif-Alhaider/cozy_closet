@@ -1,8 +1,10 @@
 package com.example.cozy_closet
 
-import okhttp3.Response
+import com.example.cozy_closet.models.Clothes
+import com.example.cozy_closet.models.response.Weather
 
 interface MainActivityView {
-    fun onSuccess(response: Response)
-    fun onFailure(message: String?)
+    fun showClothes(clothes:Clothes)
+    fun showWeatherData(weather:Weather,date:String,weatherDescription:String)
+    fun showNoNetworkConnection()
 }
