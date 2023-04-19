@@ -61,7 +61,12 @@ class Presenter(private val mainActivityView: MainActivityView) {
             }
         )
     }
-
+    /**
+    * Converts the given date and time string in ISO format to a human-readable date format.
+    * Example: "2023-04-19T15:30:00.000Z" -> "Tue, 19 April 2023"
+    * @param dateTime The date and time string in ISO format to be converted.
+    * @return A string representing the date in the format "EEE, dd MMMM yyyy".
+     */
     private fun convertDateFormat(dateTime: String): String {
         val formatterInput = DateTimeFormatter.ISO_DATE_TIME
         val formatterOutput = DateTimeFormatter.ofPattern("EEE, dd MMMM yyyy", Locale.ENGLISH)
@@ -122,10 +127,6 @@ class Presenter(private val mainActivityView: MainActivityView) {
         return dateTime1?.toLocalDate() == dateTime2.toLocalDate()
     }
 
-    /**
-     * Returns the current local date and time.
-     * @return The current [LocalDateTime] object representing the local date and time.
-     */
     private fun currentLocalTime() = LocalDateTime.now()
 
 }
