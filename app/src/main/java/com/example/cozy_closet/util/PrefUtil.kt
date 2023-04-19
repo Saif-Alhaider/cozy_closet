@@ -2,11 +2,8 @@ package com.example.cozy_closet.util
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.util.Log
 import com.example.cozy_closet.models.Clothes
-import com.google.gson.Gson
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 
 object PrefUtil {
@@ -24,8 +21,8 @@ object PrefUtil {
 
     fun storeClothes(clothes: Clothes) {
         sharedPreferences?.edit()?.apply {
-            putInt(DRESS, clothes.dress!!)
-            putInt(PANTS, clothes.pants!!)
+            putInt(DRESS, clothes.dressResourceId!!)
+            putInt(PANTS, clothes.pantsResourceId!!)
             putInt(TEMPERATURE_RANGE_INITIAL, clothes.temperatureRange!!.first)
             putInt(TEMPERATURE_RANGE_FINAL, clothes.temperatureRange.last)
             putString(TIME_CREATED, LocalDateTime.now().toString())

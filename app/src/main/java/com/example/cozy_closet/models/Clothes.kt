@@ -1,10 +1,9 @@
 package com.example.cozy_closet.models
 
-import android.util.Range
-import java.time.LocalDateTime
+import androidx.annotation.DrawableRes
 
 data class Clothes(
-    val dress: Int?,
-    val pants: Int?,
+    @DrawableRes val dressResourceId: Int?,
+    @DrawableRes val pantsResourceId: Int? ,
     val temperatureRange: IntRange?
 )

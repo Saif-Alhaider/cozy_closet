@@ -18,13 +18,12 @@ class Presenter(private val mainActivityView: MainActivityView) {
     fun getData() {
         WeatherService().getWeather(
             WeatherRequest(
-                latitude = 47.560539,
-                longitude = -52.712830,
+                latitude = 33.23,
+                longitude = 44.33,
                 hourly = "temperature_80m",
                 current_weather = true
             ),
             onSuccess = { response ->
-
                 val weather =
                     Gson().fromJson(response.body?.string().toString(), Weather::class.java)
                 val currentTime = LocalDateTime.now().toString()
@@ -57,7 +56,11 @@ class Presenter(private val mainActivityView: MainActivityView) {
 
         if (createdTime == null) {
             setClothesData(currentTemperature, null)
-        }else if (!isSameDayMonthYear(getClothesData().second!!.toLocalDateTime()!!, LocalDateTime.now())){
+        } else if (!isSameDayMonthYear(
+                getClothesData().second!!.toLocalDateTime()!!,
+                LocalDateTime.now()
+            )
+        ) {
             setClothesData(currentTemperature, null)
         }
         mainActivityView.showClothes(getClothesData().first!!)
