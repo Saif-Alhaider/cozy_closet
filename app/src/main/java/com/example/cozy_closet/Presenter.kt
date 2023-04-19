@@ -1,6 +1,7 @@
 package com.example.cozy_closet
 
 import android.util.Log
+import com.example.cozy_closet.models.CardData
 import com.example.cozy_closet.models.ClothSuggester
 import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
@@ -32,9 +33,11 @@ class Presenter(private val mainActivityView: MainActivityView) {
                     WeatherCodes.getCodeDescription(weather.currentWeather.weatherCode)
 
                 mainActivityView.showWeatherData(
-                    weather,
-                    date,
-                    weatherDescription ?: "Weather Description"
+                    CardData(
+                        weather,
+                        date,
+                        weatherDescription
+                    )
                 )
                 checkClothData(weather.currentWeather.temperature)
                 mainActivityView.showLoadingScreen(false)

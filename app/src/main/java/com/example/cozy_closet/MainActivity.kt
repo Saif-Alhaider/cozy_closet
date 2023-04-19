@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.example.cozy_closet.databinding.ActivityMainBinding
+import com.example.cozy_closet.models.CardData
 import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
 import com.example.cozy_closet.models.response.Weather
@@ -34,28 +35,31 @@ class MainActivity : AppCompatActivity(), MainActivityView {
     }
 
 
-    override fun showWeatherData(weather: Weather, date: String, weatherDescription: String) {
+    override fun showWeatherData(cardData: CardData) {
         runOnUiThread {
             binding.weatherCard.run {
-                textViewWeatherDescription.text = weatherDescription
-                textViewDate.text = date
+                textViewWeatherDescription.text = cardData.weatherDescription
+                textViewDate.text = cardData.date
                 textViewWeatherTemp.text =
-                    getString(R.string.temperature, weather.currentWeather.temperature.toString())
+                    getString(
+                        R.string.temperature,
+                        cardData.weather.currentWeather.temperature.toString()
+                    )
                 imageViewWeatherIcon.setImageResource(
-                    WeatherCodes.getWeatherIconFromWeatherCode(weather.currentWeather.weatherCode)
+                    WeatherCodes.getWeatherIconFromWeatherCode(cardData.weather.currentWeather.weatherCode)
                 )
             }
 
         }
     }
 
-    override fun showNoNetworkConnection(show:Boolean) {
+    override fun showNoNetworkConnection(show: Boolean) {
 
         runOnUiThread {
-            if (show){
+            if (show) {
                 binding.errorScreen.screen.show()
                 reloadButtonCallBack()
-            }else{
+            } else {
                 binding.errorScreen.screen.hide()
             }
 
@@ -63,11 +67,11 @@ class MainActivity : AppCompatActivity(), MainActivityView {
 
     }
 
-    override fun showLoadingScreen(show:Boolean) {
+    override fun showLoadingScreen(show: Boolean) {
         runOnUiThread {
-            if (show){
+            if (show) {
                 binding.loadingScreen.screen.show()
-            }else{
+            } else {
                 binding.loadingScreen.screen.hide()
             }
         }
