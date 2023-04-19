@@ -2,8 +2,6 @@ package com.example.cozy_closet
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import android.view.View
 import com.example.cozy_closet.databinding.ActivityMainBinding
 import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
@@ -21,7 +19,6 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         PrefUtil.initSharedPrefs(applicationContext)
-//        Log.i("Weather_Data", PrefUtil.getStoredClothes().toString())
         binding.errorScreen.screen.hide()
         presenter.getData()
     }

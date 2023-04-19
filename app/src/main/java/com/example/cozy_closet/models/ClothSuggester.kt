@@ -1,11 +1,18 @@
 package com.example.cozy_closet.models
 
 import com.example.cozy_closet.R
+import com.example.cozy_closet.util.Constants.coldTempRange
+import com.example.cozy_closet.util.Constants.coolTempRange
+import com.example.cozy_closet.util.Constants.hotTempRange
 
 class ClothSuggester {
     private val outfits = listOf<Clothes>(
-        Clothes(R.mipmap.sweater_2, R.mipmap.pants_1, -10..10),
-        Clothes(R.mipmap.tshirt_2, R.mipmap.short_1, 19..40)
+        Clothes(R.mipmap.sweater_2, R.mipmap.pants_1, coldTempRange),
+        Clothes(R.mipmap.tshirt_2, R.mipmap.pants_1, coolTempRange),
+        Clothes(R.mipmap.sweater_2, R.mipmap.pants_1, coldTempRange),
+        Clothes(R.mipmap.tshirt_2, R.mipmap.short_1, hotTempRange),
+        Clothes(R.mipmap.tshirt_3, R.mipmap.short_1, hotTempRange),
+        Clothes(R.mipmap.tshirt_4, R.mipmap.short_1, hotTempRange)
     )
 
     fun suggestClothes(currentTemperature: Double, currentClothes: Clothes?): Clothes {

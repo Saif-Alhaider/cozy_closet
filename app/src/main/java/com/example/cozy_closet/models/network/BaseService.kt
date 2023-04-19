@@ -1,6 +1,5 @@
 package com.example.cozy_closet.models.network
 
-import android.hardware.camera2.CaptureFailure
 import okhttp3.*
 import java.io.IOException
 

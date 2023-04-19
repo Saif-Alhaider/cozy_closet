@@ -1,6 +1,5 @@
 package com.example.cozy_closet
 
-import android.util.Log
 import com.example.cozy_closet.models.ClothSuggester
 import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
