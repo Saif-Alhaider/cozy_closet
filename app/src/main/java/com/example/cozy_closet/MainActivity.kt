@@ -25,8 +25,10 @@ class MainActivity : AppCompatActivity(), MainActivityView {
 
     override fun showClothes(clothes: Clothes) {
         runOnUiThread {
-            binding.itemDress.imageViewCloth.setImageResource(clothes.dressResourceId!!)
-            binding.itemPants.imageViewCloth.setImageResource(clothes.pantsResourceId!!)
+            binding.run {
+                itemDress.imageViewCloth.setImageResource(clothes.dressResourceId!!)
+                itemPants.imageViewCloth.setImageResource(clothes.pantsResourceId!!)
+            }
         }
 
     }
