@@ -1,5 +1,6 @@
 package com.example.cozy_closet
 
+import android.util.Log
 import com.example.cozy_closet.models.ClothSuggester
 import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
@@ -14,13 +15,13 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 class Presenter(private val mainActivityView: MainActivityView) {
-    fun getData() {
+    fun fetchWeatherAndShowOutfit() {
         WeatherService().getWeather(
             WeatherRequest(
                 latitude = 33.23,
                 longitude = 44.33,
                 hourly = "temperature_80m",
-                current_weather = true
+                currentWeather = true
             ),
             onSuccess = { response ->
                 val weather =
@@ -36,9 +37,17 @@ class Presenter(private val mainActivityView: MainActivityView) {
                     weatherDescription ?: "Weather Description"
                 )
                 checkClothData(weather.currentWeather.temperature)
+                mainActivityView.showLoadingScreen(false)
+                mainActivityView.showNoNetworkConnection(false)
+
             },
-            onFailure = { mainActivityView.showNoNetworkConnection() }
+            onFailure = {
+                Log.i("fail_prob",it.toString())
+                mainActivityView.showLoadingScreen(false)
+                mainActivityView.showNoNetworkConnection(true)
+            }
         )
+
     }
 
 
@@ -50,7 +59,6 @@ class Presenter(private val mainActivityView: MainActivityView) {
     }
 
     private fun checkClothData(currentTemperature: Double) {
-        val clothes = getClothesData().first
         val createdTime = getClothesData().second
 
         if (createdTime == null) {

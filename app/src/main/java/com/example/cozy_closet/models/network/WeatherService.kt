@@ -35,7 +35,7 @@ class WeatherService() : BaseService() {
             .addQueryParameter("latitude", weatherRequest.latitude.toString())
             .addQueryParameter("longitude", weatherRequest.longitude.toString())
             .addQueryParameter("hourly", weatherRequest.hourly)
-            .addQueryParameter("current_weather", weatherRequest.current_weather.toString())
+            .addQueryParameter("current_weather", weatherRequest.currentWeather.toString())
             .build()
 
         return Request.Builder().url(url).build()

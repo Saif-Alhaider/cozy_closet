@@ -2,6 +2,7 @@ package com.example.cozy_closet
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.cozy_closet.databinding.ActivityMainBinding
 import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
@@ -19,8 +20,7 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         PrefUtil.initSharedPrefs(applicationContext)
-        binding.errorScreen.screen.hide()
-        presenter.getData()
+        presenter.fetchWeatherAndShowOutfit()
     }
 
     override fun showClothes(clothes: Clothes) {
@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity(), MainActivityView {
 
 
     override fun showWeatherData(weather: Weather, date: String, weatherDescription: String) {
-
         runOnUiThread {
             binding.weatherCard.run {
                 textViewWeatherDescription.text = weatherDescription
@@ -45,23 +44,40 @@ class MainActivity : AppCompatActivity(), MainActivityView {
                 imageViewWeatherIcon.setImageResource(
                     WeatherCodes.getWeatherIconFromWeatherCode(weather.currentWeather.weatherCode)
                 )
-                binding.loadingScreen.screen.hide()
-                binding.errorScreen.screen.hide()
             }
 
         }
     }
 
-    override fun showNoNetworkConnection() {
-        binding.run {
-            loadingScreen.screen.hide()
-            errorScreen.screen.show()
+    override fun showNoNetworkConnection(show:Boolean) {
+
+        runOnUiThread {
+            if (show){
+                binding.errorScreen.screen.show()
+                reloadButtonCallBack()
+            }else{
+                binding.errorScreen.screen.hide()
+            }
+
         }
-        reloadButtonCallBack()
+
     }
-    private fun reloadButtonCallBack(){
+
+    override fun showLoadingScreen(show:Boolean) {
+        runOnUiThread {
+            if (show){
+                binding.loadingScreen.screen.show()
+            }else{
+                binding.loadingScreen.screen.hide()
+            }
+        }
+    }
+
+
+    private fun reloadButtonCallBack() {
+        Log.i("working", true.toString())
         binding.errorScreen.reloadScreen.setOnClickListener {
-            presenter.getData()
+            presenter.fetchWeatherAndShowOutfit()
         }
     }
 

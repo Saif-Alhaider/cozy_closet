@@ -6,5 +6,7 @@ import com.example.cozy_closet.models.response.Weather
 interface MainActivityView {
     fun showClothes(clothes:Clothes)
     fun showWeatherData(weather:Weather,date:String,weatherDescription:String)
-    fun showNoNetworkConnection()
+    fun showNoNetworkConnection(show:Boolean)
+
+    fun showLoadingScreen(show:Boolean)
 }
