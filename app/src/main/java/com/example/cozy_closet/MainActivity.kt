@@ -9,6 +9,8 @@ import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
 import com.example.cozy_closet.models.response.Weather
 import com.example.cozy_closet.util.PrefUtil
+import com.example.cozy_closet.util.hide
+import com.example.cozy_closet.util.show
 
 class MainActivity : AppCompatActivity(), MainActivityView {
     private lateinit var binding: ActivityMainBinding
@@ -19,12 +21,13 @@ class MainActivity : AppCompatActivity(), MainActivityView {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         PrefUtil.initSharedPrefs(applicationContext)
-        Log.i("Weather_Data", PrefUtil.getStoredClothes().toString())
+//        Log.i("Weather_Data", PrefUtil.getStoredClothes().toString())
+        binding.errorScreen.screen.hide()
         presenter.getData()
     }
 
     override fun showClothes(clothes: Clothes) {
-        runOnUiThread{
+        runOnUiThread {
             binding.itemDress.imageViewCloth.setImageResource(clothes.dressResourceId!!)
             binding.itemPants.imageViewCloth.setImageResource(clothes.pantsResourceId!!)
         }
@@ -43,15 +46,24 @@ class MainActivity : AppCompatActivity(), MainActivityView {
                 imageViewWeatherIcon.setImageResource(
                     WeatherCodes.getWeatherIconFromWeatherCode(weather.currentWeather.weatherCode)
                 )
-                binding.loadingScreen.screen.visibility = View.GONE
+                binding.loadingScreen.screen.hide()
+                binding.errorScreen.screen.hide()
             }
 
         }
     }
 
     override fun showNoNetworkConnection() {
-
+        binding.run {
+            loadingScreen.screen.hide()
+            errorScreen.screen.show()
+        }
+        reloadButtonCallBack()
     }
-
+    private fun reloadButtonCallBack(){
+        binding.errorScreen.reloadScreen.setOnClickListener {
+            presenter.getData()
+        }
+    }
 
 }
