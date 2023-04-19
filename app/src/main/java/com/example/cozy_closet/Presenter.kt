@@ -1,6 +1,5 @@
 package com.example.cozy_closet
 
-import android.util.Log
 import com.example.cozy_closet.models.CardData
 import com.example.cozy_closet.models.ClothSuggester
 import com.example.cozy_closet.models.Clothes
@@ -91,7 +90,7 @@ class Presenter(private val mainActivityView: MainActivityView) {
             setClothesData(currentTemperature, null)
         }
         // If the previously stored clothes data date was different than the next day, it will get different clothes
-        else if (!isSameDayMonthYear(createdTime, currentLocalTime())) {
+        else if (isNextDay(createdTime, currentLocalTime())) {
             setClothesData(currentTemperature, getClothesData().first!!)
         }
 
@@ -123,8 +122,8 @@ class Presenter(private val mainActivityView: MainActivityView) {
      * @param dateTime2 The second [LocalDateTime] object to compare.
      * @return `true` if the two objects are on the same day, `false` otherwise.
      */
-    private fun isSameDayMonthYear(dateTime1: LocalDateTime?, dateTime2: LocalDateTime): Boolean {
-        return dateTime1?.toLocalDate() == dateTime2.toLocalDate()
+    private fun isNextDay(dateTime1: LocalDateTime?, dateTime2: LocalDateTime): Boolean {
+        return dateTime1?.plusDays(1)?.toLocalDate() == dateTime2.toLocalDate()
     }
 
     private fun currentLocalTime() = LocalDateTime.now()
