@@ -31,9 +31,7 @@ class MainActivity : AppCompatActivity(), MainActivityView {
                 itemPants.imageViewCloth.setImageResource(clothes.pantsResourceId!!)
             }
         }
-
     }
-
 
     override fun showWeatherData(cardData: CardData) {
         runOnUiThread {
@@ -63,10 +61,7 @@ class MainActivity : AppCompatActivity(), MainActivityView {
                     hide()
                 }
             }
-
-
         }
-
     }
 
     override fun showLoadingScreen(show: Boolean) {

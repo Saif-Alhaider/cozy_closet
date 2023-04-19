@@ -8,6 +8,5 @@ interface MainActivityView {
     fun showClothes(clothes:Clothes)
     fun showWeatherData(cardData: CardData)
     fun showNoNetworkConnection(show:Boolean)
-
     fun showLoadingScreen(show:Boolean)
 }

@@ -50,9 +50,7 @@ class Presenter(private val mainActivityView: MainActivityView) {
                 mainActivityView.showNoNetworkConnection(true)
             }
         )
-
     }
-
 
     private fun convertDateFormat(dateTime: String): String {
         val formatterInput = DateTimeFormatter.ISO_DATE_TIME
@@ -69,6 +67,7 @@ class Presenter(private val mainActivityView: MainActivityView) {
         } else if (!isSameDayMonthYear(createdTime, currentLocalTime())) {
             setClothesData(currentTemperature, getClothesData().first!!)
         }
+
         mainActivityView.showClothes(getClothesData().first!!)
     }
 

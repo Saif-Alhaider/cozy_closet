@@ -15,7 +15,6 @@ abstract class BaseService {
             override fun onFailure(call: Call, e: IOException)  = onFailure(e.message)
 
             override fun onResponse(call: Call, response: Response)  = onSuccess(response)
-
         })
     }
 }
