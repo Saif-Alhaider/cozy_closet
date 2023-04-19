@@ -71,14 +71,7 @@ class MainActivity : AppCompatActivity(), MainActivityView {
 
     override fun showLoadingScreen(show: Boolean) {
         runOnUiThread {
-            binding.loadingScreen.screen.run {
-                if (show) {
-                    show()
-                } else {
-                    hide()
-                }
-            }
-
+            binding.loadingScreen.screen.run { if (show) show() else hide() }
         }
     }
 
