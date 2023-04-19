@@ -8,7 +8,7 @@ fun String.toLocalDateTime(): LocalDateTime? {
     return try {
         LocalDateTime.parse(this)
     } catch (e: DateTimeParseException) {
-        throw Exception(e)
+        null
     }
 }
 

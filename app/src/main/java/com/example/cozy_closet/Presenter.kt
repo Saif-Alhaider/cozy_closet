@@ -42,7 +42,7 @@ class Presenter(private val mainActivityView: MainActivityView) {
 
             },
             onFailure = {
-                Log.i("fail_prob",it.toString())
+                Log.i("fail_prob", it.toString())
                 mainActivityView.showLoadingScreen(false)
                 mainActivityView.showNoNetworkConnection(true)
             }
@@ -59,16 +59,12 @@ class Presenter(private val mainActivityView: MainActivityView) {
     }
 
     private fun checkClothData(currentTemperature: Double) {
-        val createdTime = getClothesData().second
+        val createdTime = getClothesData().second?.toLocalDateTime()
 
         if (createdTime == null) {
             setClothesData(currentTemperature, null)
-        } else if (!isSameDayMonthYear(
-                getClothesData().second!!.toLocalDateTime()!!,
-                LocalDateTime.now()
-            )
-        ) {
-            setClothesData(currentTemperature, null)
+        } else if (!isSameDayMonthYear(createdTime, currentLocalTime())) {
+            setClothesData(currentTemperature, getClothesData().first!!)
         }
         mainActivityView.showClothes(getClothesData().first!!)
     }
@@ -81,10 +77,10 @@ class Presenter(private val mainActivityView: MainActivityView) {
 
     private fun getClothesData(): Pair<Clothes?, String?> = PrefUtil.getStoredClothes()
 
-    private fun isSameDayMonthYear(dateTime1: LocalDateTime, dateTime2: LocalDateTime): Boolean {
-        return dateTime1.dayOfMonth == dateTime2.dayOfMonth &&
-                dateTime1.monthValue == dateTime2.monthValue &&
-                dateTime1.year == dateTime2.year
+    private fun isSameDayMonthYear(dateTime1: LocalDateTime?, dateTime2: LocalDateTime): Boolean {
+        return dateTime1?.toLocalDate() == dateTime2.toLocalDate()
     }
+
+    private fun currentLocalTime() = LocalDateTime.now()
 
 }
