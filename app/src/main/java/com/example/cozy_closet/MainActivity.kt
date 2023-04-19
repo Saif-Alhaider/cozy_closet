@@ -54,14 +54,16 @@ class MainActivity : AppCompatActivity(), MainActivityView {
     }
 
     override fun showNoNetworkConnection(show: Boolean) {
-
         runOnUiThread {
-            if (show) {
-                binding.errorScreen.screen.show()
-                reloadButtonCallBack()
-            } else {
-                binding.errorScreen.screen.hide()
+            binding.errorScreen.screen.run {
+                if (show) {
+                    show()
+                    reloadButtonCallBack()
+                } else {
+                    hide()
+                }
             }
+
 
         }
 
@@ -69,11 +71,14 @@ class MainActivity : AppCompatActivity(), MainActivityView {
 
     override fun showLoadingScreen(show: Boolean) {
         runOnUiThread {
-            if (show) {
-                binding.loadingScreen.screen.show()
-            } else {
-                binding.loadingScreen.screen.hide()
+            binding.loadingScreen.screen.run {
+                if (show) {
+                    show()
+                } else {
+                    hide()
+                }
             }
+
         }
     }
 
