@@ -3,6 +3,7 @@ package com.example.cozy_closet
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import com.example.cozy_closet.databinding.ActivityMainBinding
 import com.example.cozy_closet.models.Clothes
 import com.example.cozy_closet.models.WeatherCodes
@@ -42,7 +43,9 @@ class MainActivity : AppCompatActivity(), MainActivityView {
                 imageViewWeatherIcon.setImageResource(
                     WeatherCodes.getWeatherIconFromWeatherCode(weather.currentWeather.weatherCode)
                 )
+                binding.loadingScreen.screen.visibility = View.GONE
             }
+
         }
     }
 
